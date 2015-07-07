@@ -1,0 +1,13 @@
+.generate-columns(@number-columns, @index: 1) when(@index <= @number-columns) {
+	.column-@{index} {
+		width: percentage(@index / @number-columns);
+	}
+	.generate-columns(@number-columns, @index + 1);
+}
+
+.make-grid(@container-width, @gutter: @grid-gutter-width) {
+	@media(min-width: @container-width) {
+		width: @container-width - @gutter;
+		.generate-columns(@grid-columns);
+	}
+}

@@ -10,45 +10,51 @@
 	</head>
 	<body<?php echo $bodyClass; ?>>
 	
-		<div class="scaffold">
+		<div class="container">
 
-			<div><?php echo JText::_('TPL_<%= tpl_name_upper %>_BACKGROUND_COLOR_LABEL'); ?>: <?php echo $params->get('background_color'); ?></div>
-			
-			<div>
-				<a href="<?php echo $this->baseurl; ?>" title="<?php echo $app->get('sitename'); ?>">
-					<?php echo $app->get('sitename'); ?>
-				</a>
+			<div class="row">
+				<div class="column-12">
+					<?php echo JText::_('TPL_<%= tpl_name_upper %>_BACKGROUND_COLOR_LABEL'); ?>: <?php echo $params->get('background_color'); ?>
+				</div>
 			</div>
 			
-			<div class="floor">
-				<?php if($this->countModules('top')) : ?>
-				<div id="modules-top" class="room-12">
+			<?php if ($this->countModules('top')) : ?>
+			<div class="row">
+				<div id="modules-top" class="column-12">
 					<jdoc:include type="modules" name="top" style="none" />
 				</div>
-				<?php endif; ?>
 			</div>
+			<?php endif; ?>
+			
+			<?php if($this->countModules('top')) : ?>
+			<div class="row">
+				<div id="modules-top" class="column-12">
+					<jdoc:include type="modules" name="top" style="none" />
+				</div>
+			</div>
+			<?php endif; ?>
 				
-			<div class="floor">
-				<?php if($this->countModules('left')) : ?>
-				<div id="modules-left" class="room-12">
-					<jdoc:include type="modules" name="left" style="html5" />
+			<div class="row">
+				<?php if($this->countModules('position-8')) : ?>
+				<div id="column-left" class="column-3">
+					<jdoc:include type="modules" name="position-8" style="html5" />
 				</div>
 				<?php endif; ?>
 				
-				<div id="modules-left" class="room-12">
+				<div id="column-middle" class="<?php echo $columnMiddle; ?>">
 					<jdoc:include type="component" />
 				</div>
 				
-				<?php if($this->countModules('right')) : ?>
-				<div id="modules-right" class="room-12">
-					<jdoc:include type="modules" name="right" style="html5" />
+				<?php if($this->countModules('position-7')) : ?>
+				<div id="column-right" class="column-3">
+					<jdoc:include type="modules" name="position-7" style="html5" />
 				</div>
 				<?php endif; ?>
 			</div>
 				
-			<div class="floor">
+			<div class="row">
 				<?php if($this->countModules('bottom')) : ?>
-				<div id="modules-bottom" class="room-12">
+				<div id="modules-bottom" class="column-12">
 					<jdoc:include type="modules" name="bottom" style="html5" />
 				</div>
 				<?php endif; ?>

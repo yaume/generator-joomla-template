@@ -1,4 +1,53 @@
+@import "//fonts.googleapis.com/css?family=Ubuntu:400,300,500,700";
+@import "variables.less";
+@import "mixins.less";
+
 body {
-	background: #333;
-	color: #eee;
+	background: #f6f6f6;
+	font-family: 'Ubuntu', sans-serif;
+	font-weight: 400;
+	color: #555;
+}
+
+h1, h2, h3 {
+	font-weight: 300;
+}
+
+*,
+*:before,
+*:after {
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+			box-sizing: border-box;
+}
+
+.container {
+	margin-right: auto;
+	margin-left: auto;	
+	padding-left: (@grid-gutter-width / 2);
+	padding-right: (@grid-gutter-width / 2);
+
+	.row {
+		margin-left: 0 - (@grid-gutter-width / 2);
+		margin-right: 0 - (@grid-gutter-width / 2);
+	}
+
+	.row:before,
+	.row:after {
+		content: ' ';
+		display: table;
+		clear: both;
+	}
+
+	[class^="column-"] {
+		float: left;
+		width: 100%;
+		padding-left: (@grid-gutter-width / 2);
+		padding-right: (@grid-gutter-width / 2);
+	}
+
+	.make-grid(@container-xs);
+	.make-grid(@container-sm);
+	.make-grid(@container-md);
+	.make-grid(@container-lg);
 }

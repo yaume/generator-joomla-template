@@ -24,7 +24,7 @@
 	<config>
 		<fields name="params">
 			<fieldset name="advanced">
-				<field name="background_color" class="" type="color" default="#333" label="TPL_<%= tpl_name_upper %>_BACKGROUND_COLOR_LABEL" description="TPL_<%= tpl_name_upper %>_BACKGROUND_COLOR_DESC" />
+				<field name="background_color" class="" type="color" default="#f6f6f6" label="TPL_<%= tpl_name_upper %>_BACKGROUND_COLOR_LABEL" description="TPL_<%= tpl_name_upper %>_BACKGROUND_COLOR_DESC" />
 			</fieldset>
 		</fields>
 	</config>

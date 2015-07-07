@@ -41,7 +41,7 @@
 		$bodyClass = 'frontpage';
 	}
 	
-	// Remove all unused scripts
+	// TODO: Remove all unused scripts
 	//unset($this->_scripts[JURI::root(true).'/media/jui/js/jquery.min.js']);
 	//unset($this->_scripts[JURI::root(true).'/media/jui/js/jquery-noconflict.js']);
 	//unset($this->_scripts[JURI::root(true).'/media/jui/js/jquery-migrate.min.js']);
@@ -65,5 +65,14 @@
 
 	if(!empty($bodyClass)) {
 		$bodyClass = ' class="'.$bodyClass.'"';
+	}
+	
+	if ( $this->countModules('position-7') AND $this->countModules('position-8')) {
+		$columnMiddle = 'column-6';
+	} else
+	if ( $this->countModules('position-7') XOR $this->countModules('position-8')) {
+		$columnMiddle = 'column-9';
+	} else {
+		$columnMiddle = 'column-12';
 	}
 ?>
