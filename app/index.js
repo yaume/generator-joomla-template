@@ -3,50 +3,69 @@ var fs			= require('fs');
 var yeoman		= require('yeoman-generator');
 var string		= require('underscore.string');
 var chalk		= require('chalk');
-var yosay		= require('yosay');
 var zip			= null;
 var now			= new Date();
 var date		= now.getFullYear() + '-' + (now.getMonth()+1) + '-' + now.getDate();
+var framework	= null;
 
 module.exports = yeoman.generators.Base.extend({
 	
 	prompting: function () {
 		var done = this.async();
 
-		// Have Yeoman greet the user.
-		this.log(yosay('Welcome to the solid ' + chalk.red('JoomlaTemplate') + ' generator!'));
-
 		var prompts = [{
-			type: 'text',
+			type: 'input',
 			name: 'tpl_name',
-			message: 'What is the name of your joomla template?',
+			message: 'The name of your template?',
 			default: 'joomla-template'
 		},{
 			type: 'text',
 			name: 'tpl_description',
-			message: 'What is the description of your joomla template?',
+			message: 'The description of your template?',
 			default: 'A basic Joomla Template.'
 		},{
 			type: 'text',
 			name: 'tpl_version',
-			message: 'What is the version of your joomla template?',
+			message: 'The version of your template?',
 			default: '0.0.1'
 		},{
 			type: 'text',
 			name: 'tpl_license',
-			message: 'What is the license of your joomla template?',
+			message: 'The license of your template?'
 		},{
 			type: 'text',
 			name: 'tpl_author',
-			message: 'What is the name of the author?',
+			message: 'What\'s your name?'
 		},{
 			type: 'text',
 			name: 'tpl_author_email',
-			message: 'What is the email of the author?',
+			message: 'What\'s your e-mail address?'
 		},{
 			type: 'text',
 			name: 'tpl_homepage',
-			message: 'What is the homepage of the author?',
+			message: 'What\'s the URL of your website?'
+		},{
+			type: 'list',
+			name: 'tpl_framework',
+			message: 'Which framework would you like to use?',
+			choices: [{
+				name: 'Bootstrap',
+				value: 'bootstrap'
+			},{
+				name: 'Foundation',
+				value: 'foundation'
+			}]
+		},{
+			type: 'checkbox',
+			name: 'tpl_libraries',
+			message: 'Which Library would you like to use?',
+			choices: [{
+				name: 'Modernizr',
+				value: 'modernizr'
+			},{
+				name: 'Respond',
+				value: 'respond'
+			}]
 		},{
 			type: 'confirm',
 			name: 'tpl_zip',
@@ -72,7 +91,8 @@ module.exports = yeoman.generators.Base.extend({
 				files			= [],
 				variables		= [],
 				fileList		= [],
-				fileString		= [];
+				fileString		= []
+				framework		= this.props.tpl_framework;
 
 			this.destinationRoot( this.props.tpl_name );
 			
@@ -97,6 +117,7 @@ module.exports = yeoman.generators.Base.extend({
 			fileList.forEach(function(file) {
 				fileString += '\n\t\t<' + file.type + '>' + file.name + '</' + file.type + '>';
 			});
+			
 			fileString += '\n\t';
 			
 			variables = {
@@ -113,32 +134,18 @@ module.exports = yeoman.generators.Base.extend({
 				tpl_files:			fileString,
 			};
 			
-			
-			this.fs.copy(
-				this.templatePath('_editorconfig'),
-				this.destinationPath('.editorconfig')
-			);
-			
-			this.fs.copy(
-				this.templatePath('_jshintrc'),
-				this.destinationPath('.jshintrc')
-			);
-		
-			this.fs.copyTpl(
-				this.templatePath('_package.json'),
-				this.destinationPath('package.json'),
-				variables
-			);
+			console.log('Create files...');
 			
 			this.fs.copyTpl(
 				this.templatePath('_bower.json'),
 				this.destinationPath('bower.json'),
 				variables
 			);
-			
-			this.fs.copy(
-				this.templatePath('_Gruntfile.js'),
-				this.destinationPath('Gruntfile.js')
+		
+			this.fs.copyTpl(
+				this.templatePath('_package.json'),
+				this.destinationPath('package.json'),
+				variables
 			);
 			
 			this.fs.copyTpl(
@@ -178,10 +185,22 @@ module.exports = yeoman.generators.Base.extend({
 			);
 			
 			files = [
-				'css', 'fonts', 'html', 'images', 'js', 'source',
-				'component.php', 'error.php', 'favicon.ico',
-				'index.html', 'offline.php',
-				'template_preview.png', 'template_thumbnail.png'
+				'css',
+				'fonts',
+				'helpers',
+				'html',
+				'images',
+				'js',
+				'source',
+				'.bowerrc',
+				'component.php',
+				'error.php',
+				'favicon.ico',
+				'Gruntfile.js',
+				'index.html',
+				'offline.php',
+				'template_preview.png',
+				'template_thumbnail.png'
 			];
 			
 			for(; i < files.length; i++) {
@@ -202,7 +221,7 @@ module.exports = yeoman.generators.Base.extend({
 		
 		THIS.installDependencies({
 			callback: function(){
-				if(zip) {
+				if( zip ) {
 					THIS.spawnCommand('grunt', ['zip']);
 				} else {
 					THIS.spawnCommand('grunt');

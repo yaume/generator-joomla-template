@@ -1,6 +1,6 @@
 <?php
 	defined('_JEXEC') or die;
-	require_once(JPATH_THEMES.'/'.$this->template.'/html/logic.php');
+	require_once('helpers/bootstrap.php');
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $this->language; ?>" dir="<?php echo $this->direction; ?>">
@@ -8,23 +8,9 @@
 		<meta charset="utf-8">
 		<jdoc:include type="head" />
 	</head>
-	<body<?php echo $bodyClass; ?>>
+	<body<?php echo $template->getBodyClass(); ?>>
 	
 		<div class="container">
-
-			<div class="row">
-				<div class="column-12">
-					<?php echo JText::_('TPL_<%= tpl_name_upper %>_BACKGROUND_COLOR_LABEL'); ?>: <?php echo $params->get('background_color'); ?>
-				</div>
-			</div>
-			
-			<?php if ($this->countModules('top')) : ?>
-			<div class="row">
-				<div id="modules-top" class="column-12">
-					<jdoc:include type="modules" name="top" style="none" />
-				</div>
-			</div>
-			<?php endif; ?>
 			
 			<?php if($this->countModules('top')) : ?>
 			<div class="row">
